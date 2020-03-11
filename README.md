@@ -25,10 +25,12 @@ A toolset to ease your life when dealing with sprite atlases.
   Since DragonRuby now has a method to read XML and JSON resources, it is feasible to let the Spritesheet class perform
   the import directly from a running DragonRuby Game Toolkit game. It is in the works.
   
-  However this tool is meant to be usable in various environements, possibly not even Ruby.
-  So for now the prefered way is to use the command line tool.
+  However this tool is meant to be usable in various environments, possibly not even Ruby.
+  So, for now, the prefered way is to use the command line tool.
    
   ### Standalone
+  
+  [TODO: Explain ssex tool]
   
   ### Auto-update using Guard
   
