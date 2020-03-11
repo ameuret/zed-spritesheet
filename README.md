@@ -44,10 +44,13 @@ You can:
 
 ## Inputs from more sprite atlases formats?
 
-Yep! Do you need JSON and can't be bothered to do it yourself? 
+Yep! Do you need support for some weird JSON or some antiquated sprite sheet from the 80s and can't be bothered to do it yourself? 
+
+Send me samples, I'll get you sorted as long as it does not involve EBCDIC.
 
 ## In the works
 
+ - [ ] ShoeBox JSON format (thanks @booticus for expressing interest)
  - [ ] Native DragonRuby in-game import
  - [ ] Output templating to support universal and easy custom outputs
 
