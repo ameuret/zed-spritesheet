@@ -3,9 +3,8 @@ RSpec.describe Zed::Spritesheet do
     expect(Zed::Spritesheet::VERSION).not_to be nil
   end
 
-  
   describe '.new(pathBaseName, useExternalFiles = false)' do
-    it 'loads an XML description' do
+    it 'loads an XML description (<TextureAtlas><SubTexture>)' do
       ZED::SpriteSheet.new 'citydetails'
     end
 
