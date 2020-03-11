@@ -74,3 +74,27 @@ The ZED Toolset currently include:
  - Particles: a fast, multi-emitter, faux 3D, particle systems manager (𝛼)
 
 Learn more about the ZED toolset here: https://meuret.itch.io/zed
+
+## Versioning
+
+I have vowed to follow the Semantic Versioning specification 2.0.0 (see https://semver.org/).
+You can count on it and beat me up when it fails.
+
+Here are my acceptions of some terms I use in version conversations:
+
+ - Beta, Bêta (symbol: 𝛽 aka MATHEMATICAL ITALIC SMALL BETA)
+ 
+ Denotes a stable API under final testing. If no bug is found, the code will go out unmodified
+ in an upcoming release that will have the same version number. You may know this state as Release Candidate.
+ 
+ Note that this term does not imply any feature coverage.
+ 
+ - Alpha (symbol: 𝛼 aka MATHEMATICAL ITALIC SMALL ALPHA)
+ 
+ Denotes an unstable API under development. It can change anytime but the associated product should eventually
+ mature and ship. Frankly nobody is supposed to handle these versions. This label is useful for communication.
+ 
+ As semver wishes me to be clear about the API, the supported API is whatever appears when you
+ run `bundle exec rspec` in the source directory, except features marked as pending. Note: You can get a
+ clean copy of this gem source by typing `gem unpack zed-spritesheet`.
+ 
