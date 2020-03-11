@@ -4,7 +4,7 @@ A toolset to ease your life when dealing with sprite atlases.
 
 ## Features
 
- * creates a Ruby source file containing the sprite sheet declaration
+ * creates a Ruby source file containing the spritesheet declaration
    * readily compatible with DragonRuby's sprite API
    * pure core Ruby. No external dependency. Not even Ruby's stdlib. No Regexp.
  * a CLI tool that has sex in its name, legitimately
@@ -44,7 +44,7 @@ You can:
 
 ## Inputs from more sprite atlases formats?
 
-Yep! Do you need support for some weird JSON or some antiquated sprite sheet from the 80s and can't be bothered to do it yourself? 
+Yep! Do you need support for some weird JSON or some antiquated spritesheet from the 80s and can't be bothered to do it yourself? 
 
 Send me samples, I'll get you sorted as long as it does not involve EBCDIC.
 
@@ -56,7 +56,7 @@ Send me samples, I'll get you sorted as long as it does not involve EBCDIC.
 
 ## The ZED toolset for game developers
 
-This Sprite sheet utility set is part of an ongoing project offering turn-key solutions to
+This spritesheet utility set is part of an ongoing project offering turn-key solutions to
 various basic tasks many game developers face when implementing their ideas.
 
 The ZED Toolset currently include:
