@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/ameuret/zed-spritesheet.svg?branch=master)](https://travis-ci.com/ameuret/zed-spritesheet)
+
 # ZED::Spritesheet
 
 A toolset to ease your life when dealing with sprite atlases.
