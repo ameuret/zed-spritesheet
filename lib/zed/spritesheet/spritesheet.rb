@@ -1,5 +1,3 @@
-require "zed/spritesheet/version"
-
 module ZED
   class SpriteSheet
 
