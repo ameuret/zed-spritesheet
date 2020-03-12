@@ -43,7 +43,7 @@ RSpec.describe Zed::Spritesheet do
   end  
 
   describe '#[name]' do
-    it 'returns a Hash featuring DragonRuby\'s tiling keys' do
+    it 'returns a Hash for a single sprite, compliant to DragonRuby\'s tiling keys' do
       baseName =  'citydetails'
       ss = ZED::SpriteSheet.new baseName
       h = ss["cityDetails_007"]
@@ -80,7 +80,7 @@ RSpec.describe Zed::Spritesheet do
       expect(src).to include "cityDetails_000\"=>{:path=>\"spec/assets/city/cityDetails_000.png\", :x=>125, :y=>64, :w=>22, :h=>37}"
     end
 
-    it 'can set a specific path instead of using the input atlas path' do
+    it 'can force a specific path instead of using the input atlas path' do
       baseName =  'spec/assets/city/citydetails'
       ss = ZED::SpriteSheet.new baseName
       ss.export '../sprites/city'

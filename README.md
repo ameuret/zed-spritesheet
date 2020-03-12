@@ -10,7 +10,13 @@ A toolset to ease your life when dealing with sprite atlases.
    * readily compatible with DragonRuby's sprite API
    * pure core Ruby. No external dependency. Not even Ruby's stdlib. No Regexp.
  * a CLI tool that has sex in its name, legitimately
+   * to integrate to your asset workflow/pipeline or use standalone
    * suitable for use with other game engines or other languages (Lua, Rust, you name it I code it.)
+ * a Pry console to inspect the imported structure, or easily debug issues
+ 
+ ![Pry console](features/screenshots/console01.png)
+
+* built-in samples (from Kenney ケニー). You can see what it does right away.
    
 ## Usage
 
