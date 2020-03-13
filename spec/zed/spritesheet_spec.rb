@@ -13,19 +13,19 @@ RSpec.describe Zed::Spritesheet do
       raise
     end
 
-    it 'supports full path + base name specification' do
+    it 'supports full path + base name specification (basename => no file name extension)' do
       ss = ZED::SpriteSheet.new 'spec/assets/city/citydetails'
       expect(ss.path).to eq('spec/assets/city/')
       expect(ss.baseName).to eq('citydetails')
     end
 
-    it 'supports simple file base name specification' do
+    it 'supports simple file base name specification (basename => no file name extension)' do
       ss = ZED::SpriteSheet.new 'citydetails'
       expect(ss.path).to eq('')
       expect(ss.baseName).to eq('citydetails')
     end
 
-    it 'supports external sprites files' do
+    it 'supports external sprites files (it simply checks if the files are present for now. More to come.)' do
       expect do
         ZED::SpriteSheet.new 'spec/assets/citydetails-missingRef', true
       end.to raise_error Errno::ENOENT
@@ -33,7 +33,7 @@ RSpec.describe Zed::Spritesheet do
   end
 
   describe '#sprites' do
-    it 'gives access to all entries found in the XML metadata' do
+    it 'gives access to all sprites found in the atlas in the form of a Hash with the \'name\' field as key' do
       ss = ZED::SpriteSheet.new 'citydetails'
       expect(ss.sprites["cityDetails_007"][:x]).to eq(103)
       expect(ss.sprites["cityDetails_007"][:y]).to eq(64)
