@@ -2,9 +2,9 @@ require 'aruba/cucumber'
 
 Aruba.configure do |config|
   config.fixtures_directories = %w(spec/assets)
-  puts %(The cwd is "#{config.working_directory}")
-  puts %(The fixtures_directories value is "%w(#{config.fixtures_directories.join(" ")})")
-  puts "The fixture path prefix is \"#{config.fixtures_path_prefix}\"."
+#  puts %(The cwd is "#{config.working_directory}")
+#  puts %(The fixtures_directories value is "%w(#{config.fixtures_directories.join(" ")})")
+#  puts "The fixture path prefix is \"#{config.fixtures_path_prefix}\"."
 end
 
 Given("test fixtures are in {string}") do |path|
