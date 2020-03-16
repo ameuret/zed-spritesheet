@@ -4,6 +4,7 @@ module ZED
   class SpriteSheet
 
     PATH_REGEXP = /([.\/\w]*?)([-\w\d_]+)$/.freeze
+    PROJECT_URL = 'https://github.com/ameuret/zed-spritesheet'.freeze
 
     attr_reader :sprites, :pathBaseName, :path, :baseName
     

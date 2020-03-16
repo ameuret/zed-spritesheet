@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+$: << File.dirname(__FILE__) + '/../lib'
+
+require 'pathname'
+require 'optparse'
+require 'logger'
+require 'zed/spritesheet'
+
+LOG = Logger.new STDOUT
+options = {}
+OptionParser.new do |opt|
+  opt.banner = <<-'EOS'
+  A small tool by
+    / \  |  _ \| \ | |  / \ | | | |  _ \ 
+   / _ \ | |_) |  \| | / _ \| | | | | | |
+  / ___ \|  _ <| |\  |/ ___ \ |_| | |_| |
+ /_/   \_\_| \_\_| \_/_/   \_\___/|____/
+
+ Contribute: %s
+
+Usage: %s [options] PATH_TO_ATLAS
+
+EOS
+  opt.banner = opt.banner % [ZED::SpriteSheet::PROJECT_URL, $0]
+
+  opt.on('-x', '--external', 'Use external sprite files instead of spritesheet') { options[:external] = true }
+  opt.on('-i', '--ignore-path', 'Ignore atlas path in sprites config') { options[:ignorePath] = true }
+  opt.on('-o', '--output', 'Specify generated file path (specify std for STDOUT)') { |path| options[:outputPath] = path }
+  opt.on('-p', '--force-path PATH', 'Force atlas path in sprites config') { |path| options[:forcePath] = path }
+  opt.on('-s', '--samples', 'Show current samples path') {
+    puts "You can find samples there: #{File.expand_path(File.dirname(__FILE__) + '/../samples')}"
+    exit!
+  }
+end.parse!
+
+abort "Usage: #{$0} [options] PATH_TO_ATLAS (XML)" unless ARGV.length == 1
+
+ATLAS_PATH = ARGV[0]
+
+ss = ZED::SpriteSheet.new ATLAS_PATH, options[:external]
+ss.export(options[:forcePath], options[:outputPath])
