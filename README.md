@@ -60,9 +60,18 @@ Send me samples, I'll get you sorted as long as it does not involve EBCDIC.
 
 ## In the works
 
+ - [ ] Export to Class instead of Hash for DragonRuby
+ - [ ] Tiled JSON tileset format
  - [ ] ShoeBox JSON format (thanks @booticus for expressing interest)
  - [ ] Native DragonRuby in-game import
  - [ ] Output templating to support universal and easy custom outputs
+ - [ ] Viewer (Simple sprite frames visualizer in DragonRuby)
+
+## Planned
+
+ - [ ] Single format animation or still without metadata (set a import time)
+ - [ ] Embedded atlas microformat (why doesn't it exist already !?!). I'm aiming for a compact CSV with headers format.
+ 
 
 ## The ZED toolset for game developers
 
