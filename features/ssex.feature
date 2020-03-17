@@ -3,7 +3,7 @@ Feature: Create source file using ssex
   As a DragonRuby game developer
   I want to generate a ready-to-use Ruby source declaration
 
-  Scenario: Create a DragonRuby class declaration from a Kenney atlas file
+  Scenario: Create a DragonRuby sprites module from a Kenney (XML) atlas file
     Given test fixtures are in 'city'
     When I copy a directory from "%/city" to "city"
     When I run `ssex "city/citydetails"`

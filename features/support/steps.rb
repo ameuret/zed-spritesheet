@@ -14,12 +14,3 @@ Given("test fixtures are in {string}") do |path|
     Dir[@baseName].include? file
   end
 end
-
-# When("I run `ssex {string}`") do |path|
-#   `./bin/ssex #{path}`
-# end
-
-Then("a perfect Ruby file appears next to the atlas file") do
-  gen = File.read(@baseName)
-  gen.index 
-end
