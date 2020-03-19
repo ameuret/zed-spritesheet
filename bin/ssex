@@ -37,5 +37,5 @@ abort "Usage: #{$0} [options] PATH_TO_ATLAS (XML)" unless ARGV.length == 1
 
 ATLAS_PATH = ARGV[0]
 
-ss = ZED::Spritesheet.new ATLAS_PATH, options[:external]
+ss = ZED::Spritesheet.fromXML ATLAS_PATH, options[:external]
 ss.export(options[:forcePath], options[:outputPath])
