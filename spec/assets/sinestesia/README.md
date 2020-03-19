@@ -1,0 +1,1 @@
+The sample animation I use in this package was made by user sinestesia on [OpenGameArt.org](https://opengameart.org/content/2d-explosion-animations-frame-by-frame) and is included here for the sole purpose of showcasing the animation functions.

@@ -1,4 +1,5 @@
 require "zed/spritesheet/version"
+require "oily_png"
 
 module ZED
   class Spritesheet
@@ -6,18 +7,35 @@ module ZED
     PATH_REGEXP = /([.\/\w]*?)([-\w\d_]+)$/.freeze
     PROJECT_URL = 'https://github.com/ameuret/zed-spritesheet'.freeze
 
-    attr_reader :sprites, :pathBaseName, :path, :baseName
+    attr_reader :sprites, :pathBaseName, :path, :baseName, :spriteWidth, :spriteHeight
+
+    def self.fromXML(pathBaseName, useExternalFiles = false)
+      s = new pathBaseName:pathBaseName, useExternalFiles:useExternalFiles
+      s.importXML
+      s.checkExternalFilePresence if useExternalFiles
+      s
+    end
     
-    def initialize(pathBaseName, useExternalFiles = false)
+    def initialize(params)
       @sprites = {}
-      @pathBaseName = pathBaseName
-      @externalSprites = useExternalFiles
+      @pathBaseName = params[:pathBaseName]
+      @externalSprites = params[:useExternalFiles]
+      @spriteWidth = params[:spriteWidth]
+      @spriteHeight = params[:spriteHeight]
       
-      splitPath @pathBaseName
-      importXML
-      checkExternalFilePresence if useExternalFiles
+      splitPath @pathBaseName if @pathBaseName
     end
 
+    def self.create(spritesheetFilePath, width, height, useExternalFiles = false)
+      s = new pathBaseName:spritesheetFilePath,
+              useExternalFiles:useExternalFiles,
+              spriteWidth: width,
+              spriteHeight: height
+      
+      s.createSpritesFromGrid
+      s.checkExternalFilePresence if useExternalFiles
+      s
+    end
     
     def [](name)
       s = @sprites[name]
@@ -65,6 +83,27 @@ module ZED
       end
     end
 
+    def checkExternalFilePresence
+      @sprites.each {|k, v|
+        #        puts "k: #{k}"
+        #        puts "v: #{v}"
+        File.read @path + k + '.png'}
+    end
+
+    def createSpritesFromGrid
+      image = ChunkyPNG::Image.from_file(@pathBaseName)
+      nameRad =  File.basename @pathBaseName, '.png'
+      cols = image.width / @spriteWidth
+      rows = image.height / @spriteHeight
+      rows.times do
+        |rIdx|
+        cols.times do
+          |cIdx|
+          @sprites['%s-%d-%d' % [nameRad, rIdx, cIdx]] = {path: @basename, x:cIdx * @spriteWidth, y:rIdx * @spriteHeight, w:@spriteWidth, h:@spriteHeight}
+        end
+      end
+    end
+
     protected
     def splitPath(fullPath)
       # Verify regex at https://regex101.com/r/Qc7vrL/1
@@ -74,12 +113,6 @@ module ZED
       @baseName = $2
     end
 
-    def checkExternalFilePresence
-      @sprites.each {|k, v|
-        #        puts "k: #{k}"
-        #        puts "v: #{v}"
-        File.read @path + k + '.png'}
-    end
   end
 end
 

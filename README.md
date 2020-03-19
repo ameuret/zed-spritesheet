@@ -69,7 +69,7 @@ Send me samples, I'll get you sorted as long as it does not involve EBCDIC.
 
 ## Planned
 
- - [ ] Single format animation or still without metadata (set a import time)
+ - [X] Single format animation or still without metadata (set a import time)
  - [ ] Embedded atlas microformat (why doesn't it exist already !?!). I'm aiming for a compact CSV with headers format.
  
 
@@ -114,6 +114,6 @@ Here are my acceptions of some terms I use in version conversations:
  mature and ship. Frankly nobody is supposed to handle these versions. This label is useful for communication.
  
  As semver wishes me to be clear about the API, the supported API is whatever appears when you
- run `bundle exec rspec` in the source directory, except features marked as pending. Note: You can get a
+ run `bundle exec rake` in the source directory, except features marked as pending. Note: You can get a
  clean copy of this gem source by typing `gem unpack zed-spritesheet`.
  
