@@ -37,27 +37,27 @@ RSpec.describe Zed::Spritesheet do
   describe '.create(pathBaseName, width, height, useExternalFiles = false)' do
     it 'creates a set of sprites based on a monotone grid (where all sprites have identical dimensions)' do
       ss = ZED::Spritesheet.create 'spec/assets/sinestesia/explosion1.png', 256, 256
-      expect(ss.sprites["explosion1-0-0"][:x]).to eq(0)
-      expect(ss.sprites["explosion1-0-0"][:y]).to eq(0)
+      expect(ss.sprites["explosion1-0-0"][:tile_x]).to eq(0)
+      expect(ss.sprites["explosion1-0-0"][:tile_y]).to eq(0)
 
-      expect(ss.sprites["explosion1-0-0"][:w]).to eq(256)
-      expect(ss.sprites["explosion1-0-0"][:h]).to eq(256)
+      expect(ss.sprites["explosion1-0-0"][:tile_w]).to eq(256)
+      expect(ss.sprites["explosion1-0-0"][:tile_h]).to eq(256)
 
-      expect(ss.sprites["explosion1-0-7"][:x]).to eq(1792)
-      expect(ss.sprites["explosion1-0-7"][:y]).to eq(0)
+      expect(ss.sprites["explosion1-0-7"][:tile_x]).to eq(1792)
+      expect(ss.sprites["explosion1-0-7"][:tile_y]).to eq(0)
 
-      expect(ss.sprites["explosion1-7-7"][:x]).to eq(1792)
-      expect(ss.sprites["explosion1-7-7"][:y]).to eq(1792)
+      expect(ss.sprites["explosion1-7-7"][:tile_x]).to eq(1792)
+      expect(ss.sprites["explosion1-7-7"][:tile_y]).to eq(1792)
     end
   end
 
   describe '#sprites' do
     it 'gives access to all sprites found in the atlas in the form of a Hash with the \'name\' field as key' do
       ss = ZED::Spritesheet.fromXML 'citydetails'
-      expect(ss.sprites["cityDetails_007"][:x]).to eq(103)
-      expect(ss.sprites["cityDetails_007"][:y]).to eq(64)
-      expect(ss.sprites["cityDetails_007"][:w]).to eq(22)
-      expect(ss.sprites["cityDetails_007"][:h]).to eq(37)
+      expect(ss.sprites["cityDetails_007"][:tile_x]).to eq(103)
+      expect(ss.sprites["cityDetails_007"][:tile_y]).to eq(64)
+      expect(ss.sprites["cityDetails_007"][:tile_w]).to eq(22)
+      expect(ss.sprites["cityDetails_007"][:tile_h]).to eq(37)
     end
   end  
 
@@ -97,14 +97,15 @@ RSpec.describe Zed::Spritesheet do
         src = File.read(baseName + '.rb')
         expect(src).to include 'module Spritesheet'
         expect(src).to include "module #{ss.baseName.capitalize}"
+        expect(src).to include "Sprites = {"
       end
 
-      it 'creates the sprite coordinates under x, y, w, h keys' do
+      it 'creates the sprite coordinates under tile_x, tile_y, tile_w, tile_h keys' do
         baseName =  'spec/assets/city/citydetails'
         ss = ZED::Spritesheet.fromXML baseName
         ss.export
         src = File.read(baseName + '.rb')
-        expect(src).to include "cityDetails_000\"=>{:path=>\"spec/assets/city/cityDetails_000.png\", :x=>125, :y=>64, :w=>22, :h=>37}"
+        expect(src).to include "cityDetails_000\"=>{:path=>\"spec/assets/city/cityDetails_000.png\", :tile_x=>125, :tile_y=>64, :tile_w=>22, :tile_h=>37}"
       end
     end
 
@@ -118,12 +119,12 @@ RSpec.describe Zed::Spritesheet do
         expect(src).to include "module #{ss.baseName.capitalize}"
       end
 
-      it 'creates a "sprites" Hash literal with keys (sprite names) formatted as <image basename>-x-y' do
+      it 'creates a "Sprites" Hash literal with keys (sprite names) formatted as <image basename>-x-y' do
         baseName = 'spec/assets/sinestesia/explosion1.png'
         ss = ZED::Spritesheet.create baseName, 256, 256
         ss.export
         src = File.read(baseName + '.rb')
-        expect(src).to include 'sprites = {"explosion1-0-0"=>{'
+        expect(src).to include "Sprites = {\n\"explosion1-0-0\"=>{"
       end
 
       it 'points all sprite paths to the image file' do
@@ -131,7 +132,7 @@ RSpec.describe Zed::Spritesheet do
         ss = ZED::Spritesheet.create baseName, 256, 256
         ss.export
         src = File.read(baseName + '.rb')
-        expect(src).to include "sprites = {\"explosion1-0-0\"=>{:path=>\"#{baseName}\""
+        expect(src).to include "\"explosion1-0-0\"=>{:path=>\"#{baseName}\""
         expect(src).to include "\"explosion1-7-3\"=>{:path=>\"#{baseName}\""
       end
     end
@@ -141,7 +142,7 @@ RSpec.describe Zed::Spritesheet do
       ss = ZED::Spritesheet.fromXML baseName
       ss.export '../sprites/city'
       src = File.read(baseName + '.rb')
-      expect(src).to include "cityDetails_000\"=>{:path=>\"../sprites/city/cityDetails_000.png\", :x=>125, :y=>64, :w=>22, :h=>37}"
+      expect(src).to include "cityDetails_000\"=>{:path=>\"../sprites/city/cityDetails_000.png\", :tile_x=>125, :tile_y=>64, :tile_w=>22, :tile_h=>37}"
     end
 
     it 'accepts a second optional argument to specify the output path instead of saving the Ruby file next to the source atlas file' do
@@ -150,7 +151,7 @@ RSpec.describe Zed::Spritesheet do
       ss = ZED::Spritesheet.fromXML baseName
       ss.export(nil, outputSrcPath)
       src = File.read(outputSrcPath)
-      expect(src).to include "cityDetails_000\"=>{:path=>\"spec/assets/city/cityDetails_000.png\", :x=>125, :y=>64, :w=>22, :h=>37}"
+      expect(src).to include "cityDetails_000\"=>{:path=>\"spec/assets/city/cityDetails_000.png\", :tile_x=>125, :tile_y=>64, :tile_w=>22, :tile_h=>37}"
     end
 
     it 'outputs the generated Ruby code to the standard output when the second argument is STDOUT' do
