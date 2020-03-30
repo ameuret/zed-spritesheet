@@ -89,14 +89,51 @@ RSpec.describe Zed::Spritesheet do
       expect(File).to exist(baseName + '.rb')
     end
 
-    it 'creates a Hash literal under the Spritesheet::<basename> namespace' do
-      baseName =  'spec/assets/city/citydetails'
-      ss = ZED::Spritesheet.fromXML baseName
-      ss.export
-      src = File.read(baseName + '.rb')
-      expect(src).to include 'module Spritesheet'
-      expect(src).to include "module #{ss.baseName.capitalize}"
-      expect(src).to include "cityDetails_000\"=>{:path=>\"spec/assets/city/cityDetails_000.png\", :x=>125, :y=>64, :w=>22, :h=>37}"
+    context 'when importing from an XML file' do 
+      it 'creates a Hash literal under the Spritesheet::<basename> namespace' do
+        baseName =  'spec/assets/city/citydetails'
+        ss = ZED::Spritesheet.fromXML baseName
+        ss.export
+        src = File.read(baseName + '.rb')
+        expect(src).to include 'module Spritesheet'
+        expect(src).to include "module #{ss.baseName.capitalize}"
+      end
+
+      it 'creates the sprite coordinates under x, y, w, h keys' do
+        baseName =  'spec/assets/city/citydetails'
+        ss = ZED::Spritesheet.fromXML baseName
+        ss.export
+        src = File.read(baseName + '.rb')
+        expect(src).to include "cityDetails_000\"=>{:path=>\"spec/assets/city/cityDetails_000.png\", :x=>125, :y=>64, :w=>22, :h=>37}"
+      end
+    end
+
+    context 'when creating from an image file' do 
+      it 'creates a Hash literal under the Spritesheet::<image basename> namespace' do
+        baseName = 'spec/assets/sinestesia/explosion1.png'
+        ss = ZED::Spritesheet.create baseName, 256, 256
+        ss.export
+        src = File.read(baseName + '.rb')
+        expect(src).to include 'module Spritesheet'
+        expect(src).to include "module #{ss.baseName.capitalize}"
+      end
+
+      it 'creates a "sprites" Hash literal with keys (sprite names) formatted as <image basename>-x-y' do
+        baseName = 'spec/assets/sinestesia/explosion1.png'
+        ss = ZED::Spritesheet.create baseName, 256, 256
+        ss.export
+        src = File.read(baseName + '.rb')
+        expect(src).to include 'sprites = {"explosion1-0-0"=>{'
+      end
+
+      it 'points all sprite paths to the image file' do
+        baseName = 'spec/assets/sinestesia/explosion1.png'
+        ss = ZED::Spritesheet.create baseName, 256, 256
+        ss.export
+        src = File.read(baseName + '.rb')
+        expect(src).to include "sprites = {\"explosion1-0-0\"=>{:path=>\"#{baseName}\""
+        expect(src).to include "\"explosion1-7-3\"=>{:path=>\"#{baseName}\""
+      end
     end
 
     it 'accepts an optional argument used to force a specific sprite path instead of using the path stated in the input atlas' do

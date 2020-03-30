@@ -4,7 +4,7 @@ require "oily_png"
 module ZED
   class Spritesheet
 
-    PATH_REGEXP = /([.\/\w]*?)([-\w\d_]+)$/.freeze
+    PATH_REGEXP = /([.\/\w]*?)([-\w\d_.]+)$/.freeze
     PROJECT_URL = 'https://github.com/ameuret/zed-spritesheet'.freeze
 
     attr_reader :sprites, :pathBaseName, :path, :baseName, :spriteWidth, :spriteHeight
@@ -27,6 +27,7 @@ module ZED
     end
 
     def self.create(spritesheetFilePath, width, height, useExternalFiles = false)
+      # s = new pathBaseName:File.basename(spritesheetFilePath, '.*'),
       s = new pathBaseName:spritesheetFilePath,
               useExternalFiles:useExternalFiles,
               spriteWidth: width,
@@ -91,15 +92,15 @@ module ZED
     end
 
     def createSpritesFromGrid
-      image = ChunkyPNG::Image.from_file(@pathBaseName)
-      nameRad =  File.basename @pathBaseName, '.png'
+      imagePath = Pathname.new(@path) + (@baseName + '.png')
+      image = ChunkyPNG::Image.from_file(imagePath)
       cols = image.width / @spriteWidth
       rows = image.height / @spriteHeight
       rows.times do
         |rIdx|
         cols.times do
           |cIdx|
-          @sprites['%s-%d-%d' % [nameRad, rIdx, cIdx]] = {path: @basename, x:cIdx * @spriteWidth, y:rIdx * @spriteHeight, w:@spriteWidth, h:@spriteHeight}
+          @sprites['%s-%d-%d' % [@baseName, rIdx, cIdx]] = {path: imagePath.to_s, x:cIdx * @spriteWidth, y:rIdx * @spriteHeight, w:@spriteWidth, h:@spriteHeight}
         end
       end
     end
@@ -109,8 +110,11 @@ module ZED
       # Verify regex at https://regex101.com/r/Qc7vrL/1
       raise "Unrecognized path syntax: #{fullPath}" unless
         fullPath =~ PATH_REGEXP
-      @path = $1 || ''
-      @baseName = $2
+      @path = $1 || 'X'
+      @baseName = File.basename($2, '.*')
+      # puts 'fp:' + fullPath
+      # puts 'p: ' + @path
+      # puts 'b: ' + @baseName
     end
 
   end
