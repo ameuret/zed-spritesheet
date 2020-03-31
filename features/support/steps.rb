@@ -14,3 +14,15 @@ Given("test fixtures are in {string}") do |path|
     Dir[@baseName].include? file
   end
 end
+
+Given("the cwd is as follow:") do
+  puts Dir.pwd
+end
+
+Given("the path to the samples directory") do
+  @samplesPath = Pathname.new(Dir.pwd + '/samples')
+end
+
+Then("the output should contain the path to the samples directory") do
+  expect(last_command_stopped).to have_output an_output_string_including(@samplesPath.to_s)
+end

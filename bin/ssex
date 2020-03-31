@@ -29,7 +29,7 @@ EOS
   opt.on('-p', '--force-path PATH', 'Force atlas path in sprites config') { |path| $options[:forcePath] = path }
   opt.on('-s', '--samples', 'Show current samples path') {
     puts "You can find samples there: #{File.expand_path(File.dirname(__FILE__) + '/../samples')}"
-    exit!
+    exit(0)
   }
   opt.on('-w', '--width WIDTH', 'Specify individual sprite width when creating sprite sheet from image file') {
     |width|
