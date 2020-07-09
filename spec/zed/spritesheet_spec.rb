@@ -107,6 +107,14 @@ RSpec.describe Zed::Spritesheet do
         src = File.read(baseName + '.rb')
         expect(src).to include "cityDetails_000\"=>{:path=>\"spec/assets/city/cityDetails_000.png\", :tile_x=>125, :tile_y=>64, :tile_w=>22, :tile_h=>37}"
       end
+
+      it 'accepts an optional argument used to force a specific sprite path instead of using the path stated in the input XML atlas' do
+        baseName =  'spec/assets/city/citydetails'
+        ss = ZED::Spritesheet.fromXML baseName
+        ss.export '../sprites/city'
+        src = File.read(baseName + '.rb')
+        expect(src).to include "cityDetails_000\"=>{:path=>\"../sprites/city/cityDetails_000.png\", :tile_x=>125, :tile_y=>64, :tile_w=>22, :tile_h=>37}"
+      end
     end
 
     context 'when creating from an image file' do 
@@ -135,15 +143,17 @@ RSpec.describe Zed::Spritesheet do
         expect(src).to include "\"explosion1-0-0\"=>{:path=>\"#{baseName}\""
         expect(src).to include "\"explosion1-7-3\"=>{:path=>\"#{baseName}\""
       end
+
+      it 'accepts an optional argument used to force a specific sprite path instead of using the image path' do
+        baseName = 'spec/assets/sinestesia/explosion1.png'
+        ss = ZED::Spritesheet.create baseName, 256, 256
+        ss.export '../sprites/sin'
+        src = File.read(baseName + '.rb')
+        expect(src).to include "explosion1-0-0\"=>{:path=>\"../sprites/sin/explosion1.png\""
+      end
     end
 
-    it 'accepts an optional argument used to force a specific sprite path instead of using the path stated in the input atlas' do
-      baseName =  'spec/assets/city/citydetails'
-      ss = ZED::Spritesheet.fromXML baseName
-      ss.export '../sprites/city'
-      src = File.read(baseName + '.rb')
-      expect(src).to include "cityDetails_000\"=>{:path=>\"../sprites/city/cityDetails_000.png\", :tile_x=>125, :tile_y=>64, :tile_w=>22, :tile_h=>37}"
-    end
+
 
     it 'accepts a second optional argument to specify the output path instead of saving the Ruby file next to the source atlas file' do
       baseName =  'spec/assets/city/citydetails'

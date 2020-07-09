@@ -48,7 +48,8 @@ module ZED
     end
 
     def export(forcedSpritePath = nil, outputPath = nil)
-      importXML forcedSpritePath if forcedSpritePath
+      imagePath = forcedSpritePath ? forcedSpritePath : File.dirname(@pathBaseName)
+      imagePath += '/' unless imagePath[-1] == '/'
       outputPath ||= @pathBaseName + '.rb'
       if outputPath == STDOUT
         f = $stdout
@@ -62,6 +63,7 @@ module ZED
       @sprites.each {|k,v|
         #puts k.to_s
         #puts "\t" + v.to_s
+        v[:path] = imagePath + File.basename(v[:path])
         f.write('"%s"' % k.to_s)
         f.write('=>')
         f.write("%s,\n" % v.to_s)
@@ -71,8 +73,6 @@ module ZED
     end
 
     def importXML(forcedPath = nil)
-      declaredPath = forcedPath || @path
-      declaredPath += '/' unless declaredPath[-1] == '/'
       File.read(@pathBaseName + '.xml').each_line do
         |l|
         if l =~ /SubTexture\s+name="([-\w\d_]+).png"/
@@ -83,7 +83,7 @@ module ZED
             if l =~ /width\s*=\s*"(\d+)"\s+height\s*=\s*"(\d+)"/
               w = Integer $1
               h = Integer $2
-              @sprites[name] = {path: declaredPath + name + '.png', tile_x:x, tile_y:y, tile_w:w, tile_h:h}
+              @sprites[name] = {path: name + '.png', tile_x:x, tile_y:y, tile_w:w, tile_h:h}
             end
           end
           raise "Unsupported sprite sheet entry: #{l}" unless @sprites[name]
