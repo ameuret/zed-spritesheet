@@ -101,8 +101,8 @@ module ZED
     def createSpritesFromGrid
       imagePath = Pathname.new(@path) + (@baseName + '.png')
       image = ChunkyPNG::Image.from_file(imagePath)
-      cols = image.width / @spriteWidth
-      rows = image.height / @spriteHeight
+      cols = image.width / @spriteWidth + 1
+      rows = image.height / @spriteHeight + 1
       rows.times do
         |rIdx|
         cols.times do
