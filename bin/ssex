@@ -25,7 +25,7 @@ EOS
 
   opt.on('-x', '--external', 'Use external sprite files instead of spritesheet') { $options[:external] = true }
   opt.on('-i', '--ignore-path', 'Ignore atlas path in sprites config') { $options[:ignorePath] = true }
-  opt.on('-o', '--output', 'Specify generated file path (specify std for STDOUT)') { |path| $options[:outputPath] = path }
+  opt.on('-o', '--output PATH', 'Specify generated file path (specify std for STDOUT)') { |path| $options[:outputPath] = path }
   opt.on('-p', '--force-path PATH', 'Force atlas path in sprites config') { |path| $options[:forcePath] = path }
   opt.on('-s', '--samples', 'Show current samples path') {
     puts "You can find samples there: #{File.expand_path(File.dirname(__FILE__) + '/../samples')}"
@@ -45,6 +45,7 @@ abort "Usage: #{$0} [$options] PATH_TO_ATLAS (XML)" unless ARGV.length == 1
 
 def createSpritesheet
   imagePath = ARGV[0]
+  puts "Creating Sprite Sheet from #{imagePath}, monotonous grid: #{$options[:spriteHeight]}x#{$options[:spriteWidth]}"
   ZED::Spritesheet.create imagePath, $options[:spriteWidth], $options[:spriteHeight] || $options[:spriteWidth], $options[:external]
 end
 
